@@ -1,23 +1,20 @@
-package com.rober.dragdemo
+package com.rober.imagedrag.image
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet.Motion
+import android.widget.FrameLayout
 import androidx.core.view.updateLayoutParams
 import com.blankj.utilcode.util.ConvertUtils
-import com.bumptech.glide.Glide.init
 import kotlin.math.roundToInt
 
-class ResizableView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class ResizableView(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
     companion object {
         private const val TAG = "ResizableView"
@@ -33,7 +30,7 @@ class ResizableView(context: Context, attrs: AttributeSet) : View(context, attrs
     private val touchRect = RectF()
     private val touchRectScope = RectF()
     private val paint = Paint()
-    private val viewRect = RectF()
+    private val viewRect = Rect()
 
     init {
         paint.color = resources.getColor(android.R.color.white)
@@ -41,10 +38,12 @@ class ResizableView(context: Context, attrs: AttributeSet) : View(context, attrs
         paint.style = Paint.Style.STROKE
     }
 
+    var onHeightConfirmed: ((Int) -> Boolean)? = null
+
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         thisWidth = right - left
         thisHeight = bottom - top
-        viewRect.set(0f, 0f, thisWidth.toFloat(), thisHeight - touchHeight / 2f)
+        viewRect.set(0, 0, thisWidth, thisHeight)
         touchRect.set(
             (thisWidth - touchWidth) / 2f,
             thisHeight - touchHeight,
@@ -57,6 +56,8 @@ class ResizableView(context: Context, attrs: AttributeSet) : View(context, attrs
             (thisWidth + touchWidth) / 2f,
             thisHeight.toFloat()
         )
+        Log.i(TAG, "view rect:$viewRect")
+        Log.i(TAG, "touch rect:$touchRect")
     }
 
     var canDrag = false
@@ -75,8 +76,13 @@ class ResizableView(context: Context, attrs: AttributeSet) : View(context, attrs
                 }
             }
             MotionEvent.ACTION_MOVE -> {
-                updateLayoutParams<ViewGroup.LayoutParams> {
-                    height = currentHeight + (event.y - touchDownY).roundToInt()
+                val movedHeight = currentHeight + (event.y - touchDownY).roundToInt()
+                val isConfirm = onHeightConfirmed?.invoke(movedHeight) ?: false
+                if (isConfirm) {
+                    // 确定更新成这个高度
+                    updateLayoutParams<ViewGroup.LayoutParams> {
+                        height = movedHeight
+                    }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {

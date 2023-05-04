@@ -349,18 +349,24 @@ public class OperateImageView extends TransformImageView {
         float cropRectWidth = mCropRect.width();
         float cropRectHeight = mCropRect.height();
 
+        float cropAspectRatio = cropRectWidth / cropRectHeight;
+        float drawableAspectRatio = drawableWidth / drawableHeight;
+
+        float widthScale = cropRectWidth / drawableWidth;
+        float heightScale = cropRectHeight / drawableHeight;
+
         float initialMinScale;
-        if (cropRectHeight > drawableHeight || cropRectWidth > drawableWidth) {
-            // 充满
-            float widthScale = mCropRect.width() / drawableWidth;
-            float heightScale = mCropRect.height() / drawableHeight;
-            initialMinScale = Math.max(widthScale, heightScale);
+        if (drawableAspectRatio > cropAspectRatio) {
+            // 图片宽高比 比显示区域宽高比大，按高度来缩放
+            initialMinScale = heightScale;
+        } else if (drawableAspectRatio < cropAspectRatio) {
+            // 图片宽高比 比显示区域宽高比小，按宽度来缩放
+            initialMinScale = widthScale;
         } else {
-            initialMinScale = 1.0f;
+            // 显示区域 和 图片  宽高比相同。任取其一
+            initialMinScale = widthScale;
         }
-
         float tw = (cropRectWidth - drawableWidth * initialMinScale) / 2.0f + mCropRect.left;
-
         mCurrentImageMatrix.reset();
         mCurrentImageMatrix.postScale(initialMinScale, initialMinScale);
         mCurrentImageMatrix.postTranslate(tw, 0);

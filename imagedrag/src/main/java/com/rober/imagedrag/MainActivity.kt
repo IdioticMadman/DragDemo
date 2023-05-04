@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         }
 
     private fun showImage(uri: Uri) {
-        val view = findViewById<GestureImageView>(R.id.iv_gesture)
-        view.setImageUri(uri, Uri.fromFile(File(cacheDir, "result.jpg")))
+        val view = findViewById<MakeImageView>(R.id.iv_gesture)
+        view.imageView.setImageUri(uri, Uri.fromFile(File(cacheDir, "result.jpg")))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
