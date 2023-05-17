@@ -16,22 +16,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        val adapter = RecyclerViewAdapter(generateDataList())
-//        binding.rv.adapter = adapter
-//        binding.rv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-//        binding.rv.addItemDecoration(LinearLayoutItemDecoration())
-//        val itemTouchHelper = ItemTouchHelper(CustomItemTouchCallback(adapter))
-//        itemTouchHelper.attachToRecyclerView(binding.rv)
-//        val color = androidx.core.graphics.ColorUtils.compositeColors(pressColor, backGroundColor)
-//        binding.vTop.background = ColorDrawable(color)
-//        binding.vBottom.background = ColorDrawable(backGroundColor)
-//        binding.vTop.setOnClickListener {
-//            SnackBarUtils.with(binding.root)
-//                .setBgColor(backGroundColor)
-//                .setMessage("我是snack bar 出来的")
-//                .setDuration(SnackBarUtils.LENGTH_SHORT)
-//                .showWarning(true)
-//        }
     }
 
     private fun generateDataList(): MutableList<Bean> {

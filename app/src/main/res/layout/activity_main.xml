@@ -22,16 +22,30 @@
     <!--        app:layout_constraintBottom_toBottomOf="parent"-->
     <!--        app:layout_constraintTop_toBottomOf="@+id/vp_gallery" />-->
 
-    <com.rober.dragdemo.ResizableView
-        android:id="@+id/v_top"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="100dp"
-        android:background="@color/backgroundColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:background="@color/purple_200"
+        android:minHeight="200dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="20dp"
+            android:background="@color/purple_500"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
+            tools:text="jhaksjhfkjahdkjfhakjsahfkjahdjhaksjhfkjahdjhaksjhfkjahdkjfhakjsahfkjahdjhaksjhfkjahdkjfhakjsdfhkjahdfkjhaskjdhfkjahsdfkjhsdkjhfkajshdfkahsdkjfhksjhfkjshfkjahdkjahsdfkjhsdkjhfkajshdfkahsdkjfhksjhfkjshfkjahdkjfhakjsdfhkjahdfkjhaskjdhfkjahsdfkjhsdkjhfkajshdfkahsdkjfhksjhfkjshfkjahdkjahsdfkjhsdkjhfkajshdfkahsdkjfhksjhfkjshfkjahd" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
